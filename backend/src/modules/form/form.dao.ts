@@ -15,6 +15,10 @@ class FormDao {
     async updateForm(formId: number, comment: string) {
         return await FormSchema.findOneAndUpdate({ formId: formId }, {$push: {comments: comment}});
     }
+
+    async changeFormStatus(formId:number, status: string){
+        return await FormSchema.findByIdAndUpdate({formId: formId}, {status: status})
+    }
 }
 
 export default FormDao;

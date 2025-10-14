@@ -50,6 +50,18 @@ class formController {
             
         }
     }
+
+    async changeFormStatus(req:Request<{},{},{formId:number, status:string}>, res:Response){
+        try {
+            const {formId, status} = req.body;
+
+            return(await this.service.changeFormStatus(formId, status))
+        } catch (error) {
+            console.log(error);
+            throw new Error("Error al cambiar el estado del formulario")
+            
+        }
+    }
 }
 
 export default formController;

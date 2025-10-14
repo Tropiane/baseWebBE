@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
+import { ENV } from "./env";
 
-const JWT_SECRET = process.env.JWT_SECRET || "ClaveSecreta";
+const JWT_SECRET = ENV.JWT_SECRET || "ClaveSecreta";
 const EXPIRES_IN = "1D";
 
 const generateToken = (userId: string): string=>{
