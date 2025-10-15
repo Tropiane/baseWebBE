@@ -9,8 +9,8 @@ const schema = new mongoose.Schema({
     sendAt: Date,
     status:{
         type: String,
-        enum:["pendiente", "finalizado", "en curso", "cancelado"],
-        default:"pendiente",
+        enum:["Pendiente", "Finalizado", "En Curso", "Cancelado"],
+        default:"Pendiente",
     },
     comments:[String],
 });

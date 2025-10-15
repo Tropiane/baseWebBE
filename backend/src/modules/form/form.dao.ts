@@ -17,7 +17,7 @@ class FormDao {
     }
 
     async changeFormStatus(formId:number, status: string){
-        return await FormSchema.findByIdAndUpdate({formId: formId}, {status: status})
+        return await FormSchema.findOneAndUpdate({formId: formId}, {status: status})
     }
 }
 

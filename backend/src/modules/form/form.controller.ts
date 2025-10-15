@@ -48,13 +48,15 @@ class formController {
             console.log(error);
             throw new Error("Error al crear el formulario")
             
-        }
+        }   
     }
 
     async changeFormStatus(req:Request<{},{},{formId:number, status:string}>, res:Response){
         try {
-            const {formId, status} = req.body;
-
+            const formId = req.body.formId;
+            const status = req.body.status;
+            console.log('datos recibidos por BE', {formId, status});
+            
             return(await this.service.changeFormStatus(formId, status))
         } catch (error) {
             console.log(error);
