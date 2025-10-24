@@ -55,7 +55,6 @@ class formController {
         try {
             const formId = req.body.formId;
             const status = req.body.status;
-            console.log('datos recibidos por BE', {formId, status});
             
             return(await this.service.changeFormStatus(formId, status))
         } catch (error) {
