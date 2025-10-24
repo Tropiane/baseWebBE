@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     /* Lenguaje y entorno */
-    "target": "ES2020",                /* Versión de JS moderna para Node.js */
+    "target": "es6",                /* Versión de JS moderna para Node.js */
     "module": "CommonJS",              /* Compatible con Node.js */
     "lib": ["ES2020"],                 /* Librerías base */
 
