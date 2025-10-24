@@ -34,6 +34,9 @@ class UserService{
 
         const verifyPassword =await compareHash(data.password, userPassword.toString());        
 
+        if(!verifyPassword){
+            throw new Error("Contrasena incorrecta")
+        }
         return user;
     }
 

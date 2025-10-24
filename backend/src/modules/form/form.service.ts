@@ -5,7 +5,7 @@ class formService{
     async getForms() {
 
         return await this.formDao.getForms();
-    }
+    };
     async createForm(form: formInterface) {
         const allForms = await this.formDao.getForms();
         if (!allForms || allForms.length === 0) {
@@ -16,15 +16,19 @@ class formService{
         
         form.sendAt = new Date();
         return await this.formDao.createForm(form);
-    }
+    };
 
     async deleteForm(formId: number) {
         return await this.formDao.deleteForm(formId);
-    }
+    };
 
     async updateForm(formId: number, comment: string) {
         return await this.formDao.updateForm(formId, comment);
-    }
+    };
+
+    async changeFormStatus(formId: number, status:string){
+        await this.formDao.changeFormStatus(formId, status);
+    };
 }
 
 export default formService
