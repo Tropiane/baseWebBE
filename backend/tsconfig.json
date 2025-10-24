@@ -1,26 +1,24 @@
 {
   "compilerOptions": {
     /* Lenguaje y entorno */
-    "target": "ES2020",                  /* Versión moderna compatible con Node 18+ */
-    "module": "CommonJS",                /* Node usa CommonJS */
-    "lib": ["ES2020"],
+    "target": "es6",                /* Versión de JS moderna para Node.js */
+    "module": "CommonJS",              /* Compatible con Node.js */
+    "lib": ["ES2020"],                 /* Librerías base */
 
     /* Estructura de carpetas */
-    "rootDir": "./src",                  /* Carpeta donde está tu código TS */
-    "outDir": "./dist",                  /* Carpeta de salida de compilación */
+    "rootDir": "./",                /* Carpeta de entrada */
+    "outDir": "./dist",                /* Carpeta de salida al compilar */
 
-    /* Resolución e importaciones */
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "types": ["node"],                   /* Para que reconozca process, console, etc. */
+    /* Import/export */
+    "esModuleInterop": true,           /* Permite importaciones comunes */
+    "moduleResolution": "node",        /* Resolución de módulos estilo Node */
+    "resolveJsonModule": true,         /* Permite importar JSONs */
 
     /* Buenas prácticas */
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true
+    "strict": true,                    /* Reglas estrictas de tipado */
+    "skipLibCheck": true               /* Evita chequear .d.ts externos */
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "index.ts", "package.json"],                  /* Incluye todos los TS dentro de src */
+  "exclude": ["node_modules", "dist"]  /* No compilar dependencias ni salida */
 }
