@@ -18,11 +18,11 @@ class UserDao{
     }
 
     async getUserByID(id:string){
-        const user = await UserModel.findById(id)
+        const user = await UserModel.findById(id).lean();
         return user
     }
     async getUserByEmail(email:string){
-        const user = await UserModel.find({email: email})
+        const user = await UserModel.find({email: email}).lean()
         return user
     }
 }
