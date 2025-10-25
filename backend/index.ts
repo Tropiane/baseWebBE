@@ -9,6 +9,7 @@ import { userRouter } from "./src/modules/user/user.router";
 
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET || 'cookie_secret_key'))
 app.use(express.urlencoded({ extended: true }));
@@ -26,4 +27,4 @@ app.use('/api/user', userRouter)
 //Connect to DB
 connection.connect();
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
