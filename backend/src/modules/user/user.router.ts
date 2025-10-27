@@ -15,7 +15,4 @@ router.post('/login', async (req: Request<{}, {}, UserInterface>, res: Response)
     await controller.login(req, res)
 })
 
-router.get('/private', validateAdmin, (req:Request, res:Response)=>{
-    res.send("usted esta autorizado")
-})
 export const userRouter = router
