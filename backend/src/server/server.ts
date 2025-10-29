@@ -28,7 +28,7 @@ export default class Server{
         this.app.use(cors({
             origin: [ENV.CORS_ORIGIN],
             credentials: true,
-            methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
             allowedHeaders: ["Content-Type", "Authorization"]
         }));
     };
