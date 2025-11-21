@@ -7,7 +7,7 @@ import { validateAdmin } from "../../middlewares/userAuth";
 const router = Router();
 const controller = new UserController();
 
-router.post('/create', async (req: Request<{}, {}, UserInterface>, res: Response)=>{
+router.post('/create',validateAdmin, async (req: Request<{}, {}, UserInterface>, res: Response)=>{
     await controller.createUser(req, res)
 });
 
