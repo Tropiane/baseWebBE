@@ -5,7 +5,7 @@ import { validateAdmin } from "../../middlewares/userAuth";
 const router = Router();
 const controller = new formController();
 
-router.get("/", (req: Request, res: Response) => {controller.getForms(req, res)});
+router.get("/", validateAdmin, (req: Request, res: Response) => {controller.getForms(req, res)});
 router.post("/", (req: Request, res: Response)=>{controller.createForm(req, res);});
 router.patch("/", validateAdmin, async (req:Request<{},{}, {id: number, comment: string}>, res:Response)=>{await controller.updateForm(req, res)  });
 router.delete('/', async (req: Request<{},{},{id: number}>, res:Response)=>{ await controller.deleteForm(req, res)})
