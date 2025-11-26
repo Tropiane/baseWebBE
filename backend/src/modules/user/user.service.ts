@@ -27,12 +27,16 @@ class UserService{
         if (!user) {
             throw new Error("Usuario no encontrado, verifique el correo")
         }
-        const userPassword = user[0].password?.toString()
-        if(!userPassword){
+        
+        if(!data.password || data.password.length == 0){
             throw new Error("Debe ingresar su contrasena")
         }
 
-        const verifyPassword =await compareHash(data.password, userPassword.toString());        
+        const userPassword = user.password;
+        if (!userPassword) {
+            throw new Error("Usuario no tiene contraseña");
+        }
+        const verifyPassword = await compareHash(data.password, userPassword.toString());        
 
         if(!verifyPassword){
             throw new Error("Contrasena incorrecta")
@@ -47,7 +51,7 @@ class UserService{
 
     async getUserByEmail(email:string){
         const user = await this.DAO.getUserByEmail(email)
-        return user
+        return user[0]    
     }
 
 }
