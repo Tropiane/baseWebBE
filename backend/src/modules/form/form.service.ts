@@ -1,4 +1,3 @@
-import e from "express";
 import FormDao from "./form.dao";
 import formInterface from "./form.interface";
 class formService{
@@ -9,15 +8,6 @@ class formService{
     };
     async createForm(form: formInterface) {
         const allForms = await this.formDao.getForms();
-
-        const validateEmail = (email: string) =>{
-            return allForms.filter(form => form.email === email)
-        }
-
-        if(validateEmail(form.email).length >= 2){
-            throw new Error("Ya tiene 2 formularios pendientes");
-        }
-        //validar si existen formularios y asignar id
         if (!allForms || allForms.length === 0) {
             form.formId = 1;
         } else {

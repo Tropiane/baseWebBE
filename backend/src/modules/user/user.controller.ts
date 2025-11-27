@@ -33,6 +33,7 @@ class UserController{
 
     async login(req: Request<{}, {}, UserInterface>, res: Response) {
         const data = req.body;
+        console.log(data);
         const user = await this.Service.login(data);
 
         const token = generateToken(user._id.toString());
@@ -43,7 +44,7 @@ class UserController{
             httpOnly: true,
             signed: true,
             secure: true,
-            sameSite: "none"
+            sameSite: "lax"
         });
 
         res.json({ message: "Login exitoso" });
