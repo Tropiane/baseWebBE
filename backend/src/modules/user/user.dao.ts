@@ -23,7 +23,7 @@ class UserDao{
     }
     async getUserByEmail(email:string){
         const user = await UserModel.find({email: email}).lean()
-        return user
+        return user[0]
     }
 }
 
