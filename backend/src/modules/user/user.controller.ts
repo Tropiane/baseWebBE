@@ -44,7 +44,7 @@ class UserController{
             httpOnly: true,
             signed: true,
             secure: true,
-            sameSite: "lax"
+            sameSite: "none",
         });
 
         res.json({ message: "Login exitoso" });
