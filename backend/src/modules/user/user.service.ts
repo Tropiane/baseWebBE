@@ -28,15 +28,14 @@ class UserService{
             throw new Error("Usuario no encontrado, verifique el correo")
         }
         
-        if(!data.password || data.password.length == 0){
+        if(!data.password){
             throw new Error("Debe ingresar su contrasena")
         }
-
         const userPassword = user.password;
-        if (!userPassword) {
-            throw new Error("Usuario no tiene contraseña");
+        if(!userPassword){
+            throw new Error("Usuario no tiene contrasena asignada")
         }
-        const verifyPassword = await compareHash(data.password, userPassword.toString());        
+        const verifyPassword =await compareHash(data.password, userPassword.toString());        
 
         if(!verifyPassword){
             throw new Error("Contrasena incorrecta")

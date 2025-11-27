@@ -35,9 +35,10 @@ class UserController{
         const data = req.body;
         console.log(data);
         const user = await this.Service.login(data);
-        
-        const token = generateToken(user._id.toString());
 
+        const token = generateToken(user._id.toString());
+        console.log(token);
+        
         res.cookie("token", token, {
             maxAge: 1000 * 60 * 60 * 24 * 3,
             httpOnly: true,
