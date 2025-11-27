@@ -15,11 +15,12 @@ class UserController{
         try {
             const data = req.body;        
             const user = await this.Service.createUser(data);
-
             res.cookie("token", user.token, {
-                maxAge: 259200,
+                maxAge: 1000 * 60 * 60 * 24 * 3,
                 httpOnly: true,
-                signed: true
+                signed: true,
+                sameSite: "none",
+                secure: true,
             })            
             res.send("usuario creado correctamente: ")
         } catch (error) {
