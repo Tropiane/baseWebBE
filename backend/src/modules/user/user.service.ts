@@ -48,6 +48,11 @@ class UserService{
         return user
     }
 
+    async getUserByEmail(email:string){
+        const user = await this.DAO.getUserByEmail(email)
+        return user
+    }
+
 }
 
 export default UserService
