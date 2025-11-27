@@ -50,7 +50,7 @@ class UserService{
 
     async getUserByEmail(email:string){
         const user = await this.DAO.getUserByEmail(email)
-        return user[0]    
+        return user
     }
 
 }
