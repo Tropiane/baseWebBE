@@ -32,14 +32,13 @@ class UserController{
     }
 
     async login(req: Request<{}, {}, UserInterface>, res: Response) {
+        try {
         const data = req.body;
-        console.log(data);
         const user = await this.Service.login(data);
 
         const token = generateToken(user._id.toString());
-        console.log(token);
         
-        res.cookie("token", token, {
+        const cookie = res.cookie("token", token, {
             maxAge: 1000 * 60 * 60 * 24 * 3,
             httpOnly: true,
             signed: true,
@@ -47,7 +46,13 @@ class UserController{
             sameSite: "none",
         });
 
+        if (!cookie) {
+            throw new Error("Error al crear la cookie");
+        }
         res.json({ message: "Login exitoso" });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     async getUserById(id:string){
