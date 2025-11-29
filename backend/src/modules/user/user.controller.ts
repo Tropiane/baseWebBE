@@ -32,28 +32,28 @@ class UserController{
     }
 
     async login(req: Request<{}, {}, UserInterface>, res: Response) {
-        try {
+    try {
         const data = req.body;
         const user = await this.Service.login(data);
 
         const token = generateToken(user._id.toString());
-        
-        const cookie = res.cookie("token", token, {
-            maxAge: 1000 * 60 * 60 * 24 * 3,
-            httpOnly: true,
-            signed: true,
-            secure: true,
-            sameSite: "none",
+
+        res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        signed: true,
+        maxAge: 1000 * 60 * 60 * 24 * 3
         });
 
-        if (!cookie) {
-            throw new Error("Error al crear la cookie");
-        }
         res.json({ message: "Login exitoso" });
-        } catch (error) {
-            console.log(error);
-        }
-    }
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Error en el login" });
+  }
+}
+
 
     async getUserById(id:string){
         const user = this.Service.getUserById(id);
