@@ -13,7 +13,7 @@ export default class Server{
     connect(){
         const PORT = ENV.PORT;
         this.app.use(express.json());
-        this.app.use(cookieParser(ENV.COOKIE_SECRET || 'cookie_secret_key'))
+        this.app.use(cookieParser(ENV.COOKIE_SECRET))
         this.app.use(express.urlencoded({ extended: true }));
 
         this.app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
