@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         roles:['user', 'admin'],
         default: 'user'
-    }
+    },
+    refreshToken: String
 })
 
 const UserModel = mongoose.model("User", userSchema);

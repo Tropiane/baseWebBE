@@ -1,4 +1,4 @@
-import { generateToken } from "../../utils/jwt"
+import { generateRefreshToken } from "../../utils/jwt"
 import UserModel from "./userSchema"
 
 export interface UserInterface{
@@ -12,7 +12,7 @@ class UserDao{
         const newUser = await UserModel.create(data)
         newUser.save()
 
-        const token = generateToken(newUser._id.toString())
+        const token = generateRefreshToken(newUser._id.toString())
         
         return({newUser, token})
     }
@@ -24,6 +24,10 @@ class UserDao{
     async getUserByEmail(email:string){
         const user = await UserModel.find({email: email}).lean()
         return user[0]
+    }
+
+    async setRefreshToken(id: string, token: string){
+        await UserModel.findOneAndUpdate({ _id: id }, { refreshToken: token });
     }
 }
 

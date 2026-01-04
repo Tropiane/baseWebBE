@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import type { UserInterface } from "./user.dao";
 import UserService from "./user.service";
-import { generateToken } from "../../utils/jwt";
+import { generateAccessToken, generateRefreshToken } from "../../utils/jwt";
 
 export interface userCreatedInterface{
     user: UserInterface[],
@@ -14,15 +14,16 @@ class UserController{
     async createUser(req: Request<{}, {}, UserInterface>, res: Response){
         try {
             const data = req.body;        
-            const user = await this.Service.createUser(data);
-            res.cookie("token", user.token, {
-                maxAge: 1000 * 60 * 60 * 24 * 3,
-                httpOnly: true,
-                signed: true,
-                sameSite: "none",
-                secure: true,
-            })            
-            res.send("usuario creado correctamente: ")
+            await this.Service.createUser(data);
+
+            const user = await this.Service.getUserByEmail(data.email);
+            
+            const accessToken = generateAccessToken(user._id.toString());
+            const refreshToken = generateRefreshToken(user._id.toString());
+
+            await this.Service.setRefreshToken(user._id.toString(), refreshToken);
+
+            res.status(200).json({ accessToken });
         } catch (error) {
             res.send("error al crear el usuario");
             console.log(error);
@@ -36,18 +37,12 @@ class UserController{
         const data = req.body;
         const user = await this.Service.login(data);
 
-        const token = generateToken(user._id.toString());
+        const accessToken = generateAccessToken(user._id.toString());
+        const refreshToken = generateRefreshToken(user._id.toString());
 
-        res.cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        path: "/",
-        signed: true,
-        maxAge: 1000 * 60 * 60 * 24 * 3
-        });
+        await this.Service.setRefreshToken(user._id.toString(), refreshToken);
 
-        res.json({ message: "Login exitoso" });
+        res.status(200).json({ accessToken });
 
   } catch (error) {
     console.log(error);

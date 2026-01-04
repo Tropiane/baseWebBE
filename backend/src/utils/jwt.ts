@@ -2,10 +2,13 @@ import jwt from "jsonwebtoken";
 import { ENV } from "./env";
 
 const JWT_SECRET = ENV.JWT_SECRET;
-const EXPIRES_IN = "1D";
 
-const generateToken = (userId: string): string=>{
-    return jwt.sign({id: userId}, JWT_SECRET, {expiresIn: EXPIRES_IN});
+const generateAccessToken = (userId: string): string=>{
+    return jwt.sign({id: userId}, JWT_SECRET, {expiresIn: "15m"});
+}
+
+const generateRefreshToken = (userId: string): string=>{
+    return jwt.sign({id: userId}, JWT_SECRET, {expiresIn: "7D"});
 }
 
 const validateToken = (token:string): any =>{
@@ -13,6 +16,7 @@ const validateToken = (token:string): any =>{
 };
 
 export {
-    generateToken,
+    generateAccessToken,
+    generateRefreshToken,
     validateToken
 }
