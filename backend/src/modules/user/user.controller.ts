@@ -33,22 +33,29 @@ class UserController{
     }
 
     async login(req: Request<{}, {}, UserInterface>, res: Response) {
-    try {
-        const data = req.body;
-        const user = await this.Service.login(data);
+        try {
+            const user = await this.Service.login(req.body);
 
-        const accessToken = generateAccessToken(user._id.toString());
-        const refreshToken = generateRefreshToken(user._id.toString());
+            const accessToken = generateAccessToken(user._id.toString());
+            const refreshToken = generateRefreshToken(user._id.toString());
 
-        await this.Service.setRefreshToken(user._id.toString(), refreshToken);
+            await this.Service.setRefreshToken(user._id.toString(), refreshToken);
+            
+            res
+            .cookie("refreshToken", refreshToken, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
+                maxAge: 7 * 24 * 60 * 60 * 1000
+            })
+            .status(200)
+            .json({ accessToken });
 
-        res.status(200).json({ accessToken });
-
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Error en el login" });
-  }
+        } catch (error) {
+            res.status(500).json({ error: "Error en el login" });
+    }
 }
+
 
 
     async getUserById(id:string){

@@ -1,18 +1,24 @@
 import { Request, Response, NextFunction } from "express";
-import { validateToken } from "../utils/jwt";
+import { verifyAccessToken, verifyRefreshToken } from "../utils/jwt";
 import UserController from "../modules/user/user.controller";
+import { JwtPayload } from "jsonwebtoken";
 
 const controller = new UserController()
 
-const validateAdmin = async (req: Request, res: Response, next: NextFunction)=>{
-    const token = req.signedCookies.token;
+const validateAdmin = async (req: Request<{}, {}, {token: string}>, res: Response, next: NextFunction)=>{
+    const token = req.headers.authorization
+    console.log(token);
     
     if(!token){
         throw new Error("No tiene token de acceso")
     };
 
-    const verifiedToken = validateToken(token);
-    const userId = verifiedToken.id;
+    const verified = verifyAccessToken(token);
+    if (typeof verified === "string") {
+        throw new Error("Token inválido");
+    }
+    const verifiedAccessToken: JwtPayload = verified;
+    const userId = verifiedAccessToken.id;
 
     const user = await controller.getUserById(userId);
     if (!user) {

@@ -22,6 +22,7 @@ export default class Server{
     endPoint(){
         this.app.use('/api/form', formRouter);
         this.app.use('/api/user', userRouter)
+        this.app.use('/api/auth', userRouter);
     };
 
     cors(){
