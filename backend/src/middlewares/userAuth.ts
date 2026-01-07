@@ -6,7 +6,7 @@ import { JwtPayload } from "jsonwebtoken";
 const controller = new UserController()
 
 const validateAdmin = async (req: Request<{}, {}, {token: string}>, res: Response, next: NextFunction)=>{
-    const token = req.headers.authorization
+    const token = req.headers.authorization?.split(" ")[1];
     console.log(token);
     
     if(!token){
