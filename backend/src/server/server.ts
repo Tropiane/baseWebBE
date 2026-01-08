@@ -29,6 +29,8 @@ export default class Server{
         this.app.use(cors({
             origin: [ENV.CORS_ORIGIN, "http://localhost:5173"],
             credentials: true,
+            methods: ["GET", "POST", "PATCH", "DELETE"],
+            allowedHeaders: ["Content-Type", "Authorization"]
         }));
     };
 };
