@@ -7,7 +7,6 @@ const controller = new UserController()
 
 const validateAdmin = async (req: Request<{}, {}, {token: string}>, res: Response, next: NextFunction)=>{
     const token = req.headers.authorization?.split(" ")[1];
-    console.log(token);
     
     if(!token){
         throw new Error("No tiene token de acceso")
