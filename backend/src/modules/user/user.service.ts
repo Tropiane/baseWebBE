@@ -3,11 +3,11 @@ import { userCreatedInterface } from "./user.controller";
 import type { UserInterface } from "./user.dao";
 
 import UserDao from "./user.dao";
-import { UserValidation } from "./user.validation";
+import { UserLibrary } from "./user.library";
 
 class UserService{
     private DAO = new UserDao();
-    private Validation = new UserValidation();
+    private Validation = new UserLibrary();
 
     async createUser(data:UserInterface): Promise<userCreatedInterface>{
         this.Validation.validateData(data);
@@ -33,7 +33,7 @@ class UserService{
         }
         const userPassword = user.password;
         if(!userPassword){
-            throw new Error("Usuario no tiene contrasena asignada")
+            throw new Error("Contrasena incorrecta")
         }
         const verifyPassword =await compareHash(data.password, userPassword.toString());        
 
@@ -41,6 +41,10 @@ class UserService{
             throw new Error("Contrasena incorrecta")
         }
         return user;
+    }
+
+    async setRefreshToken(id: string, token: string){
+        await this.DAO.setRefreshToken(id, token);
     }
 
     async getUserById(id:string){

@@ -1,16 +1,19 @@
 import { UserInterface } from "./user.dao";
 
-export class UserValidation{
-    private library = new Library
+export class UserLibrary{
+
+    private validation = new UserValidation;
+
     validateData(data:UserInterface){
-        this.library.getAllData(data);
-        this.library.getEmail(data);
-        this.library.getPassword(data);
+        this.validation.getAllData(data);
+        this.validation.getEmail(data);
+        this.validation.getPassword(data);
     }
+
 }
 
-class Library{
-    getAllData(data:UserInterface){
+class UserValidation{
+        getAllData(data:UserInterface){
         if(!data){
             throw new Error("Debe completar todos los campos")
         }
